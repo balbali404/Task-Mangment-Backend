@@ -113,7 +113,7 @@ _Requires Authentication_
 | `POST` | `/team/invite`        | Generate a team invite.                   |
 | `GET`  | `/team/invite`        | Get pending invites for the user.         |
 | `POST` | `/team/invite/verify` | Verify an invite token.                   |
-| `PUT`  | `/team/invite/:id?STATUS=ACCEPTED`    | Respond to a team invite (Accept/Reject). |
+| `PUT`  | `/team/invite/:id?status=ACCEPTED`    | Respond to a team invite (status can be (ACCEPTED/REJECTED)). |
 
 ### 💬 Messages (`/messages`)
 
