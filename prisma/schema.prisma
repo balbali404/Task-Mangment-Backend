@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  name         String
+  password     String
+  verifed      Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  role         TeamRole      @default(NONE)
+  accountType  accountType   @default(INDIVIDUAL)
+  lastSeen     DateTime?
+  teamId       String?
+  messages     Message[]
+  messageReads MessageRead[]
+  tasks        Task[]
+  ownedTeam    Team?         @relation("TeamOwner")
+  teamInvites  TeamInvite[]
+  memberOfTeam Team?         @relation("TeamMembers", fields: [teamId], references: [id])
+}
+
+model Team {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  owner       String       @unique
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  messages    Message[]
+  tasks       Task[]
+  ownedBy     User         @relation("TeamOwner", fields: [owner], references: [id])
+  teamInvites TeamInvite[]
+  members     User[]       @relation("TeamMembers")
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  completed   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String?
+  teamId      String?
+  team        Team?    @relation(fields: [teamId], references: [id])
+  user        User?    @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([teamId])
+}
+
+model TeamInvite {
+  id        String   @id @default(uuid())
+  teamId    String
+  userId    String?
+  email     String?
+  status    Status   @default(PENDING)
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  team      Team     @relation(fields: [teamId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id           String         @id @default(uuid())
+  content      String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  teamId       String
+  senderId     String
+  sender       User           @relation(fields: [senderId], references: [id])
+  team         Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  media        MessageMedia[]
+  messageReads MessageRead[]
+
+  @@index([teamId])
+}
+
+model MessageMedia {
+  id        String    @id @default(uuid())
+  url       String
+  type      MediaType
+  createdAt DateTime  @default(now())
+  messageId String
+  message   Message   @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@index([messageId])
+}
+
+model MessageRead {
+  id        String   @id @default(uuid())
+  messageId String
+  userId    String
+  readAt    DateTime @default(now())
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, userId])
+}
+
+enum accountType {
+  INDIVIDUAL
+  TEAM
+}
+
+enum TeamRole {
+  OWNER
+  ADMIN
+  MEMBER
+  NONE
+}
+
+enum Status {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  AUDIO
+  FILE
+}
