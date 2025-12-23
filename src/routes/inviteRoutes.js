@@ -11,7 +11,7 @@ route.post("/invite" , validate(inviteSchema) , generateTeamInvite)
 route.post("/invite/verify" , verifyInviteToken, verifyInvite)
 route.get("/invite/pending" , getPendingInviteByUserId)
 // route.get("/invite" , getInviteByUserId)
-route.put("/invite" , verifyInviteToken, respondToTeamInvite)
+route.put("/invite/:id" , verifyInviteToken, respondToTeamInvite)
 
 
 export default route

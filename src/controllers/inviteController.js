@@ -81,11 +81,10 @@ const verifyInvite = (req, res) => {
 }
 const respondToTeamInvite = async (req, res) => {
   const { status } = req.query
+  const {id} = req.params
   const token = req.inviteToken
   const userId = req.user.id
-  console.log("token ",token)
-  console.log("userId ",userId)
-  if (!token) {
+  if (!token && !id) {
     return res.status(401).json({ message: "No invite token" })
   }
 
@@ -94,8 +93,8 @@ const respondToTeamInvite = async (req, res) => {
   }
 
 
-  const invite = await prisma.teamInvite.findUnique({
-    where: { token }
+  const invite = await prisma.teamInvite.findFirst({
+    where: { OR : [{token} , {id}] }
   })
 
   if (!invite || invite.status !== "PENDING") {
@@ -123,7 +122,15 @@ const respondToTeamInvite = async (req, res) => {
       accountType: "TEAM"
     }
   })
-
+  if(invite.userId === null){
+    await prisma.teamInvite.update({
+      where: { id: invite.id },
+      data: {
+        userId : userId
+      }
+    })
+    
+  }
   await prisma.team.update({
     where: { id: invite.teamId },
     data: {
@@ -137,9 +144,8 @@ const respondToTeamInvite = async (req, res) => {
 }
 const getPendingInviteByUserId = async (req, res) => {
   const userId = req.user.id
-  const invite = await prisma.teamInvite.findUnique({
-    where: { userId },
-    AND : {status : "PENDING"}
+  const invite = await prisma.teamInvite.findFirst({
+    where: {status : "PENDING" , OR : [{userId} , {email : req.user.email}] }
   })
   if(!invite){
     return res.status(404).json({ message: "Invite not found" })
