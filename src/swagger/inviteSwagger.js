@@ -1,6 +1,6 @@
 /**
  * @swagger
- * /invite:
+ * /api/invite:
  *   post:
  *     summary: Generate team invite
  *     tags:
@@ -28,7 +28,7 @@
 
 /**
  * @swagger
- * /invite/verify:
+ * /api/invite/verify:
  *   post:
  *     summary: Verify team invite
  *     tags:
@@ -52,7 +52,7 @@
 
 /**
  * @swagger
- * /invite/:id:
+ * /api/invite/:id:
  *   post:
  *     summary: Accept or Reject team invite
  *     tags:

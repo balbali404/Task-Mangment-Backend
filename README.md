@@ -86,18 +86,22 @@ The API allows you to manage users, teams, tasks, and messages.
 
 ### 🔐 Authentication (`api/auth`)
 
-| Method | Endpoint         | Description                   |
-| :----- | :--------------- | :---------------------------- |
-| `POST` | `api/auth/register` | Register a new user.          |
-| `POST` | `api/auth/login`    | Login user and receive JWT.   |
-| `POST` | `api/auth/logout`   | Logout user (clears cookies). |
+| Method | Endpoint                | Description                        |
+| :----- | :---------------------- | :--------------------------------- |
+| `POST` | `api/auth/register`     | Register a new user.               |
+| `POST` | `api/auth/login`        | Login user and receive JWT.        |
+| `POST` | `api/auth/logout`       | Logout user (clears cookies).      |
+| `POST` | `api/auth/refreshtoken` | Refresh access token using cookie. |
+
+**Refresh Token Usage:**
+When you login, a `refreshToken` HttpOnly cookie is set automatically. To get a new `accessToken` when the old one expires, send a POST request to `/api/auth/refreshtoken` (credentials/cookies must be included). The response will contain a new `accessToken`.
 
 ### 📝 Tasks (`/task-list`)
 
 _Requires Authentication_
 
-| Method   | Endpoint         | Description                                   |
-| :------- | :--------------- | :-------------------------------------------- |
+| Method   | Endpoint            | Description                                   |
+| :------- | :------------------ | :-------------------------------------------- |
 | `POST`   | `api/task-list`     | Create a new task.                            |
 | `GET`    | `api/task-list`     | Get all tasks for the logged-in user or team. |
 | `GET`    | `api/task-list/:id` | Get specific task details.                    |
@@ -108,19 +112,19 @@ _Requires Authentication_
 
 _Requires Authentication_
 
-| Method | Endpoint              | Description                               |
-| :----- | :-------------------- | :---------------------------------------- |
-| `POST` | `api/team/invite`        | Generate a team invite.                   |
-| `GET`  | `api/team/invite`        | Get pending invites for the user.         |
-| `POST` | `api/team/invite/verify` | Verify an invite token.                   |
-| `PUT`  | `api/team/invite/:id?status=ACCEPTED`    | Respond to a team invite (status can be (ACCEPTED/REJECTED)). |
+| Method | Endpoint                              | Description                                                   |
+| :----- | :------------------------------------ | :------------------------------------------------------------ |
+| `POST` | `api/team/invite`                     | Generate a team invite.                                       |
+| `GET`  | `api/team/invite`                     | Get pending invites for the user.                             |
+| `POST` | `api/team/invite/verify`              | Verify an invite token.                                       |
+| `PUT`  | `api/team/invite/:id?status=ACCEPTED` | Respond to a team invite (status can be (ACCEPTED/REJECTED)). |
 
 ### 💬 Messages (`api/messages`)
 
 _Requires Authentication_
 
-| Method | Endpoint            | Description                              |
-| :----- | :------------------ | :--------------------------------------- |
+| Method | Endpoint               | Description                              |
+| :----- | :--------------------- | :--------------------------------------- |
 | `GET`  | `api/messages/:teamId` | Get message history for a specific team. |
 
 ## 🔌 Socket.io Events (Real-time)

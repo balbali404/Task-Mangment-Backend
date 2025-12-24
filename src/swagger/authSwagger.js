@@ -1,6 +1,6 @@
 /**
  * @swagger
- * /auth/register:
+ * /api/auth/register:
  *   post:
  *     summary: Register a new user
  *     tags:
@@ -33,7 +33,7 @@
  */
 /**
  * @swagger
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Login in a user
  *     tags:
@@ -63,7 +63,7 @@
 
 /**
  * @swagger
- * /auth/logout:
+ * /api/auth/logout:
  *   post:
  *     summary: Logout a user
  *     tags:
@@ -73,4 +73,17 @@
  *     responses:
  *       200:
  *         description: User logged out successfully
+ */
+/**
+ * @swagger
+ * /api/auth/refresh-token:
+ *   post:
+ *     summary: Refresh the access token
+ *     tags:
+ *       - Auth
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Access token refreshed successfully
  */

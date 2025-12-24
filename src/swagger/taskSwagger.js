@@ -1,6 +1,6 @@
 /**
  * @swagger
- * /task-list:
+ * /api/task-list:
  *   get:
  *     summary: Get tasks
  *     security:
@@ -14,7 +14,7 @@
 
 /**
  * @swagger
- * /tasks/{id}:
+ * /api/tasks/{id}:
  *   get:
  *     summary: Get task by ID
  *     security:
@@ -37,7 +37,7 @@
 
 /**
  * @swagger
- * /task-list/{id}:
+ * /api/task-list/{id}:
  *   put:
  *     summary: Update task list by ID
  *     security:
@@ -60,7 +60,7 @@
 
 /**
  * @swagger
- * /task-list/{id}:
+ * /api/task-list/{id}:
  *   delete:
  *     summary: Delete task list by ID
  *     security:
