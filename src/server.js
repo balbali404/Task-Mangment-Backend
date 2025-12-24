@@ -28,11 +28,11 @@ app.use(cookieParser())
 startInviteCleanupJob()
 
 // Routes
-app.use("api/auth", authRoutes)
-app.use("api/task-list", taskListRoutes)
-app.use("api/team", inviteRoutes)
-app.use("api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
-app.use("api/messages", messageRoutes)
+app.use("/api/auth", authRoutes)
+app.use("/api/task-list", taskListRoutes)
+app.use("/api/team", inviteRoutes)
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+app.use("/api/messages", messageRoutes)
 
 // Error handling
 app.use(notFound)

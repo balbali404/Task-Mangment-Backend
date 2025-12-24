@@ -1,7 +1,7 @@
 import {prisma} from '../config/db.js'
 import bcrypt from 'bcryptjs'
-import { generateToken } from '../utils/generateToken.js'
-
+import { generateAccessToken , generateRefreshToken } from '../utils/generateToken.js'
+import jwt from "jsonwebtoken";
 
 const register = async (req, res) => {
   const { email, name, password, TeamName } = req.body
@@ -60,7 +60,8 @@ const register = async (req, res) => {
     team = await prisma.team.findUnique({ where: { id: teamInvite.teamId } })
   }
    
-  const token = generateToken(user.id, res)
+  const accessToken = generateAccessToken(user.id);
+  const refreshToken = generateRefreshToken(user.id, res);
 
   return res.status(200).clearCookie("TEAM_INVITE_TOKEN").json({
     message: "User registered successfully",
@@ -70,7 +71,7 @@ const register = async (req, res) => {
       name: user.name,
       TeamName: TeamName ? team.name : (teamInvite && team) ? "you have joined " + team.name : null
     },
-    token
+    accessToken
   })
 }
 const login = async (req ,res) => {
@@ -87,7 +88,8 @@ const login = async (req ,res) => {
             message:"Invalid Password"
         })
     }
-    const token = generateToken(user.id , res)
+    const accessToken = generateAccessToken(user.id);
+    const refreshToken = generateRefreshToken(user.id, res);
     return res.status(200).json({
         message:"User logged in successfully",
         data:{
@@ -95,13 +97,30 @@ const login = async (req ,res) => {
             email: user.email,
             name: user.name  
         },
-        token
+        accessToken
     })
 }
+const refreshToken = async (req, res) => {
+    const token = req.cookies.refreshToken;
+    if (!token) return res.status(401).json({ message: "No refresh token" });
+    console.log("refresh token",token)
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+      
+      const user = await prisma.user.findUnique({ where: { id: decoded.id } });
+      if (!user) return res.status(401).json({ message: "User not found" });
 
+      const accessToken = generateAccessToken(user.id);
+
+      return res.json({ accessToken });
+    } catch (err) {
+      console.log("JWT verify error:", err.message);
+      return res.status(403).json({ message: "Invalid refresh token" });
+    }
+  };
 const logout = (req, res) => {
   // Clear the cookie set for JWT
-  res.clearCookie("jwt", {
+  res.clearCookie("refreshToken", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict"
@@ -110,4 +129,4 @@ const logout = (req, res) => {
   res.status(200).json({ status: "success", message: "Logged out" })
 }
 
-export { register , login , logout }
+export { register , login , logout ,refreshToken }
