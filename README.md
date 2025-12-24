@@ -84,13 +84,13 @@ The API allows you to manage users, teams, tasks, and messages.
 
 **Interactive Docs:** Visit `http://localhost:3000/api-docs` after starting the server to see the full Swagger documentation.
 
-### 🔐 Authentication (`/auth`)
+### 🔐 Authentication (`api/auth`)
 
 | Method | Endpoint         | Description                   |
 | :----- | :--------------- | :---------------------------- |
-| `POST` | `/auth/register` | Register a new user.          |
-| `POST` | `/auth/login`    | Login user and receive JWT.   |
-| `POST` | `/auth/logout`   | Logout user (clears cookies). |
+| `POST` | `api/auth/register` | Register a new user.          |
+| `POST` | `api/auth/login`    | Login user and receive JWT.   |
+| `POST` | `api/auth/logout`   | Logout user (clears cookies). |
 
 ### 📝 Tasks (`/task-list`)
 
@@ -98,30 +98,30 @@ _Requires Authentication_
 
 | Method   | Endpoint         | Description                                   |
 | :------- | :--------------- | :-------------------------------------------- |
-| `POST`   | `/task-list`     | Create a new task.                            |
-| `GET`    | `/task-list`     | Get all tasks for the logged-in user or team. |
-| `GET`    | `/task-list/:id` | Get specific task details.                    |
-| `PUT`    | `/task-list/:id` | Update a task.                                |
-| `DELETE` | `/task-list/:id` | Delete a task.                                |
+| `POST`   | `api/task-list`     | Create a new task.                            |
+| `GET`    | `api/task-list`     | Get all tasks for the logged-in user or team. |
+| `GET`    | `api/task-list/:id` | Get specific task details.                    |
+| `PUT`    | `api/task-list/:id` | Update a task.                                |
+| `DELETE` | `api/task-list/:id` | Delete a task.                                |
 
-### 👥 Teams & Invites (`/team`)
+### 👥 Teams & Invites (`api/team`)
 
 _Requires Authentication_
 
 | Method | Endpoint              | Description                               |
 | :----- | :-------------------- | :---------------------------------------- |
-| `POST` | `/team/invite`        | Generate a team invite.                   |
-| `GET`  | `/team/invite`        | Get pending invites for the user.         |
-| `POST` | `/team/invite/verify` | Verify an invite token.                   |
-| `PUT`  | `/team/invite/:id?status=ACCEPTED`    | Respond to a team invite (status can be (ACCEPTED/REJECTED)). |
+| `POST` | `api/team/invite`        | Generate a team invite.                   |
+| `GET`  | `api/team/invite`        | Get pending invites for the user.         |
+| `POST` | `api/team/invite/verify` | Verify an invite token.                   |
+| `PUT`  | `api/team/invite/:id?status=ACCEPTED`    | Respond to a team invite (status can be (ACCEPTED/REJECTED)). |
 
-### 💬 Messages (`/messages`)
+### 💬 Messages (`api/messages`)
 
 _Requires Authentication_
 
 | Method | Endpoint            | Description                              |
 | :----- | :------------------ | :--------------------------------------- |
-| `GET`  | `/messages/:teamId` | Get message history for a specific team. |
+| `GET`  | `api/messages/:teamId` | Get message history for a specific team. |
 
 ## 🔌 Socket.io Events (Real-time)
 
