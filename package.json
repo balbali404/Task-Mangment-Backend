@@ -9,9 +9,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "type": "module",
   "license": "MIT",
+  "type": "module",
   "description": "",
   "dependencies": {
     "@prisma/client": "^6.19.1",
