@@ -177,7 +177,7 @@
  */
 /**
  * @swagger
- * /api/team/kickMember:
+ * /api/team/kickMemeber:
  *   put:
  *     tags:
  *       - Team
@@ -209,7 +209,7 @@
 
 /**
  * @swagger
- * /api/team/leave:
+ * /api/team/leaveTeam:
  *   put:
  *     tags:
  *       - Team

@@ -108,16 +108,29 @@ _Requires Authentication_
 | `PUT`    | `api/task-list/:id` | Update a task.                                |
 | `DELETE` | `api/task-list/:id` | Delete a task.                                |
 
-### 👥 Teams & Invites (`api/team`)
+### 👥 Teams (`api/team`)
 
 _Requires Authentication_
 
-| Method | Endpoint                              | Description                                                   |
-| :----- | :------------------------------------ | :------------------------------------------------------------ |
-| `POST` | `api/team/invite`                     | Generate a team invite.                                       |
-| `GET`  | `api/team/invite`                     | Get pending invites for the user.                             |
-| `POST` | `api/team/invite/verify`              | Verify an invite token.                                       |
-| `PUT`  | `api/team/invite/:id?status=ACCEPTED` | Respond to a team invite (status can be (ACCEPTED/REJECTED)). |
+| Method | Endpoint               | Description                           |
+| :----- | :--------------------- | :------------------------------------ |
+| `GET`  | `api/team`             | Get team details.                     |
+| `POST` | `api/team`             | Create a new team.                    |
+| `PUT`  | `api/team`             | Update team details.                  |
+| `PUT`  | `api/team/changeRole`  | Change a member's role (OWNER/ADMIN). |
+| `PUT`  | `api/team/kickMemeber` | Kick a member from the team.          |
+| `PUT`  | `api/team/leaveTeam`   | Leave the current team.               |
+
+### 📩 Invites (`api/invite`)
+
+_Requires Authentication_
+
+| Method | Endpoint                         | Description                                                 |
+| :----- | :------------------------------- | :---------------------------------------------------------- |
+| `POST` | `api/invite`                     | Generate a team invite via email.                           |
+| `GET`  | `api/invite/pending`             | Get pending invites for the user.                           |
+| `POST` | `api/invite/verify`              | Verify an invite token.                                     |
+| `PUT`  | `api/invite/:id?status=ACCEPTED` | Respond to a team invite (status can be ACCEPTED/REJECTED). |
 
 ### 💬 Messages (`api/messages`)
 
@@ -172,4 +185,5 @@ src/
 5. Open a Pull Request
 
 ## ⚖️ License
+
 MIT
