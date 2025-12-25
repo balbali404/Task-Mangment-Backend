@@ -6,7 +6,7 @@ export const teamSchema = z.object({
 
 export const changeRoleValidator = z.object({
   userId: z.uuid(),
-  role: z.enum(["OWNER", "ADMIN", "MEMBER"])
+  role: z.enum(["ADMIN", "MEMBER"])
 })
 
 export const kickMemberValidator = z.object({
