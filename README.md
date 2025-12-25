@@ -54,8 +54,8 @@ A robust Task Management API built with Node.js, Express, Prisma (PostgreSQL), a
    DATABASE_URL="postgresql://user:password@localhost:5432/task_db?schema=public"
 
    # Security
-   JWT_SECRET="your_super_secret_key"
-
+   JWT_ACCESS_SECRET="your_super_secret_key"
+   JWT_REFRESH_SECRET="your_super_secret_key"
    # Note: Ensure you have your database running before proceeding.
    ```
 
