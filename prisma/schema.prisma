@@ -8,28 +8,29 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(uuid())
-  email        String        @unique
-  name         String
-  password     String
-  verifed      Boolean       @default(false)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  role         TeamRole      @default(NONE)
-  accountType  accountType   @default(INDIVIDUAL)
-  lastSeen     DateTime?
-  teamId       String?
-  messages     Message[]
-  messageReads MessageRead[]
-  tasks        Task[]
-  ownedTeam    Team?         @relation("TeamOwner")
-  teamInvites  TeamInvite[]
-  memberOfTeam Team?         @relation("TeamMembers", fields: [teamId], references: [id])
+  id            String        @id @default(uuid())
+  email         String        @unique
+  name          String
+  password      String
+  verifed       Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  role          TeamRole      @default(NONE)
+  accountType   accountType   @default(INDIVIDUAL)
+  lastSeen      DateTime?
+  teamId        String?
+  messages      Message[]
+  messageReads  MessageRead[]
+  tasks         Task[]
+  ownedTeam     Team?         @relation("TeamOwner")
+  teamInvites   TeamInvite[]
+  memberOfTeam  Team?         @relation("TeamMembers", fields: [teamId], references: [id] , onDelete: Cascade)
+  assignedTasks Task[]        @relation("TaskAssignees")
 }
 
 model Team {
   id          String       @id @default(uuid())
-  name        String       @unique
+  name        String
   owner       String       @unique
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
@@ -41,16 +42,18 @@ model Team {
 }
 
 model Task {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
   description String?
-  completed   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  completed   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  dueDate     DateTime?
+  assignees   User[]    @relation("TaskAssignees")
   userId      String?
   teamId      String?
-  team        Team?    @relation(fields: [teamId], references: [id])
-  user        User?    @relation(fields: [userId], references: [id])
+  team        Team?     @relation(fields: [teamId], references: [id])
+  user        User?     @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([teamId])

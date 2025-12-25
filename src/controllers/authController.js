@@ -4,9 +4,8 @@ import { generateAccessToken , generateRefreshToken } from '../utils/generateTok
 import jwt from "jsonwebtoken";
 
 const register = async (req, res) => {
-  const { email, name, password, TeamName } = req.body
-  let {accountType} = req.body
-
+  const { email, name, password} = req.body
+  let {accountType ,TeamName} = req.body
   const userExist = await prisma.user.findUnique({ where: { email } })
   if (userExist) {
     return res.status(400).json({ message: "User Already existed" })
@@ -58,12 +57,13 @@ const register = async (req, res) => {
       }
     })
     team = await prisma.team.findUnique({ where: { id: teamInvite.teamId } })
+    res.clearCookie("TEAM_INVITE_TOKEN")
   }
    
   const accessToken = generateAccessToken(user.id);
   const refreshToken = generateRefreshToken(user.id, res);
-
-  return res.status(200).clearCookie("TEAM_INVITE_TOKEN").json({
+  
+  return res.status(200).json({
     message: "User registered successfully",
     data: {
       id: user.id,
@@ -77,6 +77,11 @@ const register = async (req, res) => {
 const login = async (req ,res) => {
     const {email , password} = req.body
     const user = await prisma.user.findUnique({where : {email}})
+    if(user.verifed === false){
+      return res.status(400).json({
+            message:"Please Verify Your Account"
+      })
+    }
     if(!user){
         return res.status(400).json({
             message:"User not found"

@@ -1,6 +1,5 @@
 import { prisma } from "../config/db.js";
 import { generateInviteToken } from "../utils/generateInviteToken.js";
-import jwt from "jsonwebtoken";
 const generateTeamInvite = async (req, res) => {
   const { teamId, email } = req.body;
   const owner = await prisma.user.findUnique({
@@ -50,7 +49,11 @@ const generateTeamInvite = async (req, res) => {
   })
   const sevenDaysAgo = new Date(alreadyHaveInvite?.createdAt.getTime() + 7 * 24 * 60 * 60 * 1000)
   if (alreadyHaveInvite && alreadyHaveInvite.createdAt < sevenDaysAgo) {
-    return res.status(400).json({ message: "User already invited" })
+    return res.status(400).json({ 
+        message: "User already invited" ,
+        alreadyHaveInvite
+      }
+    )
   }
   const teamInvite = await prisma.teamInvite.create({ data });
 

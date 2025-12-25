@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser"
 import swaggerUi from "swagger-ui-express"
 import swaggerSpec from "./swagger.js"
 import messageRoutes from "./routes/messageRoutes.js"
+import teamRoutes from "./routes/teamRoutes.js"
 import { socketHandler } from "./sockets/socketHandler.js"
 
 config()
@@ -30,9 +31,10 @@ startInviteCleanupJob()
 // Routes
 app.use("/api/auth", authRoutes)
 app.use("/api/task-list", taskListRoutes)
-app.use("/api/team", inviteRoutes)
+app.use("/api/invite", inviteRoutes)
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 app.use("/api/messages", messageRoutes)
+app.use("/api/team", teamRoutes)
 
 // Error handling
 app.use(notFound)

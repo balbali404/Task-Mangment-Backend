@@ -13,7 +13,7 @@ export const verifyInviteToken = async (req, res, next) => {
         return next()
     }
     try {
-        jwt.verify(token, process.env.JWT_SECRET)
+        jwt.verify(token, process.env.JWT_INVITE_SECRET)
 
         const invite = await prisma.teamInvite.findUnique({
         where: { token }

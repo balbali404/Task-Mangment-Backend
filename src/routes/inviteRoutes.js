@@ -7,11 +7,11 @@ import { inviteSchema } from "../validators/invitesValidator.js"
 
 const route = express.Router()
 route.use(authMiddleware)
-route.post("/invite" , validate(inviteSchema) , generateTeamInvite)
-route.post("/invite/verify" , verifyInviteToken, verifyInvite)
-route.get("/invite/pending" , getPendingInviteByUserId)
+route.post("/" , validate(inviteSchema) , generateTeamInvite)
+route.post("/verify" , verifyInviteToken, verifyInvite)
+route.get("/pending" , getPendingInviteByUserId)
 // route.get("/invite" , getInviteByUserId)
-route.put("/invite/:id" , verifyInviteToken, respondToTeamInvite)
+route.put("/:id" , verifyInviteToken, respondToTeamInvite)
 
 
 export default route

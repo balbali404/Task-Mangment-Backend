@@ -33,6 +33,7 @@ const options = {
     "./src/swagger/authSwagger.js",
     "./src/swagger/taskSwagger.js",
     "./src/swagger/inviteSwagger.js",
+    "./src/swagger/teamSwagger.js",
     
   ]
 }

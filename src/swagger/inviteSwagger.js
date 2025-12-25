@@ -40,9 +40,9 @@
  *           schema:
  *             type: object
  *             required:
- *               - id
+ *               - token
  *             properties:
- *               id:
+ *               token:
  *                 type: string
  *                 example: "123"
  *     responses:

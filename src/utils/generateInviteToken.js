@@ -8,7 +8,7 @@ export const generateInviteToken = (teamId) => {
 
   return jwt.sign(
     payload,
-    process.env.JWT_SECRET,
+    process.env.JWT_INVITE_SECRET,
     { expiresIn: process.env.INVITE_EXPIRES_IN || "7d" }
   )
 }
