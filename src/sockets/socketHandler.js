@@ -13,7 +13,7 @@ export const socketHandler = (io) => {
     }
     else if (socket.handshake.headers.cookie) {
       const cookies = cookie.parse(socket.handshake.headers.cookie);
-      token = cookies.jwt;
+      token = cookies.accessToken;
     }
 
     if (!token) {
@@ -21,7 +21,7 @@ export const socketHandler = (io) => {
     }
 
     try {
-      const payload = jwt.verify(token, process.env.JWT_SECRET);
+      const payload = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
       socket.userId = payload.id;
       next();
     } catch (err) {
@@ -44,7 +44,7 @@ export const socketHandler = (io) => {
         const team = await prisma.team.findUnique({
           where: { id: teamId },
         });
-        if (!team || team.owner !== socket.userId) return;
+        if (!team || team.owner !== socket.userId) return console.log("user not authorized to join this team");
       }
 
       socket.join(`team:${teamId}`);
@@ -64,7 +64,7 @@ export const socketHandler = (io) => {
       try {
         const newMessage = await prisma.message.create({
           data: {
-            content: content || "",
+            content: content,
             teamId,
             senderId: socket.userId,
           },
