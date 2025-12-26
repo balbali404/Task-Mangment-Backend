@@ -30,7 +30,7 @@ startInviteCleanupJob()
 
 // Routes
 app.use("/api/auth", authRoutes)
-app.use("/api/task-list", taskListRoutes)
+app.use("/api/taskList", taskListRoutes)
 app.use("/api/invite", inviteRoutes)
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 app.use("/api/messages", messageRoutes)

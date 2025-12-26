@@ -11,7 +11,7 @@ route.get("/"  , getTaskList)
 
 route.get("/:id" , getTaskListById)
 
-route.put("/:id" , validate(taskListValidator) , updateTaskList)
+route.put("/:id" , updateTaskList)
 
 route.delete("/:id" , deleteTaskList)
 export default route

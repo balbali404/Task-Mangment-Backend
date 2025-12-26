@@ -1,6 +1,6 @@
 /**
  * @swagger
- * /api/task-list:
+ * /api/taskList:
  *   get:
  *     summary: Get tasks
  *     security:
@@ -14,7 +14,7 @@
 
 /**
  * @swagger
- * /api/tasks/{id}:
+ * /api/taskList/{id}:
  *   get:
  *     summary: Get task by ID
  *     security:
@@ -34,10 +34,43 @@
  *       404:
  *         description: Task not found
  */
-
 /**
  * @swagger
- * /api/task-list/{id}:
+ * /api/taskList:
+ *   post:
+ *     summary: Create task list
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Task List
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               completed:
+ *                 type: boolean
+ *               dueDate:
+ *                 type: string
+ *                 format: date
+ *               assignees:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *              
+ *     responses:
+ *       201:
+ *         description: Task list created successfully
+ */
+/**
+ * @swagger
+ * /api/taskList/{id}:
  *   put:
  *     summary: Update task list by ID
  *     security:
@@ -60,7 +93,7 @@
 
 /**
  * @swagger
- * /api/task-list/{id}:
+ * /api/taskList/{id}:
  *   delete:
  *     summary: Delete task list by ID
  *     security:

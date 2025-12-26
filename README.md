@@ -96,17 +96,17 @@ The API allows you to manage users, teams, tasks, and messages.
 **Refresh Token Usage:**
 When you login, a `refreshToken` HttpOnly cookie is set automatically. To get a new `accessToken` when the old one expires, send a POST request to `/api/auth/refreshtoken` (credentials/cookies must be included). The response will contain a new `accessToken`.
 
-### 📝 Tasks (`/task-list`)
+### 📝 Tasks (`/taskList`)
 
 _Requires Authentication_
 
 | Method   | Endpoint            | Description                                   |
 | :------- | :------------------ | :-------------------------------------------- |
-| `POST`   | `api/task-list`     | Create a new task.                            |
-| `GET`    | `api/task-list`     | Get all tasks for the logged-in user or team. |
-| `GET`    | `api/task-list/:id` | Get specific task details.                    |
-| `PUT`    | `api/task-list/:id` | Update a task.                                |
-| `DELETE` | `api/task-list/:id` | Delete a task.                                |
+| `POST`   | `api/taskList`     | Create a new task.                            |
+| `GET`    | `api/taskList`     | Get all tasks for the logged-in user or team. |
+| `GET`    | `api/taskList/:id` | Get specific task details.                    |
+| `PUT`    | `api/taskList/:id` | Update a task.                                |
+| `DELETE` | `api/taskList/:id` | Delete a task.                                |
 
 ### 👥 Teams (`api/team`)
 
