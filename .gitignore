@@ -6,3 +6,7 @@ node_modules
 
 src/test
 src/test/*
+
+taskmangment.simp
+taskmangment.simp.bak
+taskmangment.simp.user
