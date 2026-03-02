@@ -33,7 +33,7 @@ A robust Task Management API built with Node.js, Express, Prisma (PostgreSQL), a
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/balbali404/Task-Mangment-Backend/tree/main
    cd task-management
    ```
 
